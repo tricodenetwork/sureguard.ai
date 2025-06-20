@@ -7,10 +7,13 @@ import { CheckCircle, Shield, Users, TrendingUp, Globe, Zap, Star, ArrowRight, P
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useRouter } from "next/navigation"
 
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
+  const [input, setInput] = useState("")
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -24,6 +27,11 @@ export default function LandingPage() {
       element.scrollIntoView({ behavior: "smooth" })
     }
     setIsMenuOpen(false)
+  }
+
+  const handleStart = () => {
+    if (!input.trim()) return
+    router.push(`/freemium?ip=${encodeURIComponent(input)}`)
   }
 
   return (
@@ -180,16 +188,17 @@ export default function LandingPage() {
                   <div className="flex w-full max-w-xl bg-white rounded-full shadow-md overflow-hidden">
                     <input
                       type="text"
+                      value={input}
+                      onChange={e => setInput(e.target.value)}
                       placeholder="Enter IP address to start tracking"
                       className="flex-grow px-4 py-3 text-sm sm:text-base text-gray-800 focus:outline-none"
                     />
-                    <Link href="/freemium">
                     <button
+                      onClick={handleStart}
                       className="px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-pink-500 to-orange-400 text-white font-semibold text-sm sm:text-base rounded-full m-1 whitespace-nowrap"
                     >
                       Start Free Trial
                     </button>
-                    </Link>
                   </div>
                 </div>
               </motion.div>

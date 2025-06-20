@@ -38,7 +38,7 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { Progress } from "@/components/ui/progress"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import SmoothLink from "@/components/navigation/smooth-link"
+import { SmoothLink } from "@/components/navigation/smooth-link"
 import { EndpointSearch } from "@/components/api-docs/endpoint-search"
 import { CodePlayground } from "@/components/api-docs/code-playground"
 import { SDKGenerator } from "@/components/api-docs/sdk-generator"
@@ -664,12 +664,12 @@ export default function APIDocs() {
     setExpandedSections((prev) => ({ ...prev, [sectionId]: !prev[sectionId] }))
   }
 
-  const filteredEndpointsBySearch = (filteredEndpoints as any).filter(
-    (endpoint) =>
-      endpoint.path.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      endpoint.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      endpoint.category.toLowerCase().includes(searchQuery.toLowerCase()),
-  )
+const filteredEndpointsBySearch = (filteredEndpoints as APIEndpoint[]).filter(
+  (endpoint: APIEndpoint) =>
+    endpoint.path.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    endpoint.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    endpoint.category.toLowerCase().includes(searchQuery.toLowerCase())
+);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -1415,7 +1415,8 @@ echo "AI Summary: " . $response['aiInsights']['summary'] . "\\n";
                     </div>
                     <ScrollArea className="h-96">
                       <div className="space-y-2">
-                        {filteredEndpointsBySearch.map((endpoint, index) => (
+                        {filteredEndpointsBySearch.map((endpoint: APIEndpoint, index: number) => (
+
                           <Button
                             key={index}
                             variant={selectedEndpoint === endpoint ? "default" : "ghost"}
@@ -1872,7 +1873,7 @@ print_r($response);
                       availableTags={categories.slice(1)}
                     />
                     <div className="mt-4 space-y-2">
-                      {filteredEndpointsBySearch.map((endpoint, index) => (
+                     {filteredEndpointsBySearch.map((endpoint: APIEndpoint, index: number) => (
                         <Button
                           key={index}
                           variant={selectedEndpoint === endpoint ? "default" : "ghost"}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SureGuard AI - Advanced Fraud Detection Platform
 
 <div align="center">
@@ -620,3 +621,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   </p>
 </div>
 
+=======
+# suregaurd.ai
+A.I  Fraud detection provides in-depth analysis of devices, IPs, and behavior patterns using real-time monitoring, AI-driven risk scoring, and third-party integrations with Apple, Samsung, The system is available via a one-page free trial and a full enterprise-grade multi-page app.
+>>>>>>> 83e56351558ece65c95d9992bd186338cb745cfd

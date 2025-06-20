@@ -19,6 +19,7 @@ import {
   ArrowLeft,
 } from "lucide-react"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -52,6 +53,9 @@ interface DeviceData {
 }
 
 export default function FreemiumPage() {
+  const searchParams = useSearchParams()
+  const ip = searchParams.get("ip")
+
   const [searchQuery, setSearchQuery] = useState("")
   const [isSearching, setIsSearching] = useState(false)
   const [searchResults, setSearchResults] = useState<DeviceData | null>(null)
