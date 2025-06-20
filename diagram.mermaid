@@ -1,0 +1,23 @@
+graph TB
+    subgraph "Cache Layers"
+        CDN[CDN Cache]
+        REDIS[Redis Cache]
+        APP[Application Cache]
+        DB[Database Cache]
+    end
+
+    subgraph "Cache Patterns"
+        ASIDE[Cache Aside]
+        THROUGH[Write Through]
+        BEHIND[Write Behind]
+        REFRESH[Refresh Ahead]
+    end
+
+    CDN --> REDIS
+    REDIS --> APP
+    APP --> DB
+    
+    ASIDE --> REDIS
+    THROUGH --> REDIS
+    BEHIND --> REDIS
+    REFRESH --> REDIS

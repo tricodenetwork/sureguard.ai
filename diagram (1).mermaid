@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant ThreatService
+    participant Kafka
+    participant AnalyticsService
+    participant NotificationService
+    participant Database
+
+    ThreatService->>Kafka: Threat Detected Event
+    Kafka->>AnalyticsService: Process Event
+    Kafka->>NotificationService: Send Alert
+    AnalyticsService->>Database: Store Analytics
+    NotificationService->>Database: Log Notification

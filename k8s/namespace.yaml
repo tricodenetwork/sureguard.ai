@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sureguard
+  labels:
+    name: sureguard
+    istio-injection: enabled
