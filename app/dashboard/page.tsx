@@ -1,6 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,18 +13,23 @@ import { GoogleMapsTracker } from "@/components/maps/google-maps-tracker"
 import { AIRecommendations } from "@/components/ai/recommendations"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { SmoothLink } from "@/components/navigation/smooth-link"
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/lib/auth"
-import { redirect } from "next/navigation"
 
-export default async function Dashboard() {
+export default function Dashboard() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/auth/signin")
+    }
+  }, [status, router])
+
+  if (status === "loading") return null
+  if (!session) return null
+
   const [searchQuery, setSearchQuery] = useState("")
   const [analysisResult, setAnalysisResult] = useState<any>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const session = await getServerSession(authOptions)
-  if (!session) {
-    redirect("/auth/signin")
-  }
 
   const analyzeDevice = async () => {
     if (!searchQuery.trim()) return
@@ -175,30 +182,18 @@ export default async function Dashboard() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Team Members</CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">12</div>
-                <p className="text-xs text-muted-foreground">8 online now</p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Resolution Rate</CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">94.2%</div>
-                <p className="text-xs text-muted-foreground">+2.1% from last week</p>
-              </CardContent>
-            </Card>
-          </div>
-        </main>
-      </div>
-    </div>
-  )
-}
+                    <Card>
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Team Members</CardTitle>
+                        <Users className="h-4 w-4 text-muted-foreground" />
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold">12</div>
+                        <p className="text-xs text-muted-foreground">8 online now</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </main>
+              </div>
+            </div>
+  )}
