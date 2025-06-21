@@ -10,6 +10,7 @@ import { motion, AnimatePresence, useMotionValue, animate } from "framer-motion"
 import { useRouter } from "next/navigation"
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts"
 import AnimatedNumber from "@/components/AnimatedNumber"
+import { signIn } from "next-auth/react"
 
 const stats = [
     { title: "AI-Powered Detection", value: 99.7, subtitle: "Accuracy Rate", color: "text-orange-600", decimals: 1 },
@@ -123,14 +124,13 @@ export default function LandingPage() {
                     </nav>
 
                     <div className="flex items-center space-x-4">
-                        <Link href="/dashboard">
                             <Button
                                 variant="ghost"
                                 className="hidden md:inline-flex hover:bg-gray-100 transition-colors duration-200"
+                                onClick={() => signIn()}
                             >
                                 Sign In
                             </Button>
-                        </Link>
                         <Link href="/dashboard">
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                 <Button className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 transition-all duration-200">
@@ -175,11 +175,13 @@ export default function LandingPage() {
                                 <Link href="/contact" className="block text-gray-600 hover:text-gray-900 py-2">
                                     Contact
                                 </Link>
-                                <Link href="/dashboard" className="block">
-                                    <Button variant="ghost" className="w-full justify-start">
+                                    <Button 
+                                        variant="ghost" 
+                                        className="w-full justify-start"
+                                        onClick={() => signIn()}
+                                    >
                                         Sign In
                                     </Button>
-                                </Link>
                             </div>
                         </motion.div>
                     )}
@@ -332,20 +334,20 @@ export default function LandingPage() {
                 >
                     <div className="container mx-auto px-4 py-8">
                         <p className="text-center text-white/80 mb-6">Trusted by industry leaders</p>
-                        <div className="flex justify-center items-center space-x-12 opacity-60">
+                        <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-4 opacity-60">
                             {["BOOO", "Shopware", "Microsoft", "Salesforce", "IBM", "Oracle"].map((company, index) => (
-                                <motion.div
-                                    key={company}
+                            <motion.div
+                                key={company}
                                     className="text-white font-bold text-xl"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5, delay: 1.7 + index * 0.1 }}
                                     whileHover={{ scale: 1.1 }}
                                 >
-                                    {company}
-                                </motion.div>
-                            ))}
-                        </div>
+                                {company}
+                            </motion.div>
+                        ))}
+                    </div>
                     </div>
                 </motion.div>
             </section>
@@ -919,8 +921,7 @@ export default function LandingPage() {
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                 <Button
                                     size="lg"
-                                    variant="outline"
-                                    className="border-white text-white hover:bg-white/10 px-8 py-4 text-lg transition-all duration-200"
+                                    className="border border-gray-300 text-gray-800 bg-white hover:bg-gradient-to-r hover:from-pink-500 hover:to-orange-400 hover:text-white transition-all duration-300 px-8 py-4 text-lg rounded-md shadow-sm"
                                 >
                                     Schedule Demo
                                 </Button>

@@ -11,11 +11,18 @@ import { GoogleMapsTracker } from "@/components/maps/google-maps-tracker"
 import { AIRecommendations } from "@/components/ai/recommendations"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { SmoothLink } from "@/components/navigation/smooth-link"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
-export default function Dashboard() {
+export default async function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("")
   const [analysisResult, setAnalysisResult] = useState<any>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    redirect("/auth/signin")
+  }
 
   const analyzeDevice = async () => {
     if (!searchQuery.trim()) return
