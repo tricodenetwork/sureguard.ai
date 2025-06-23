@@ -38,3 +38,4 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt"
   }
 }
+console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID)
